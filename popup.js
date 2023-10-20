@@ -1,5 +1,5 @@
-async function fetchData(){
-    const url = 'https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=wat';
+async function fetchData(word){
+    const url = 'https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=' + word;
     const options = {
 	    method: 'GET',
 	    headers: {
@@ -15,8 +15,9 @@ async function fetchData(){
     } catch (error) {
 	    console.error(error);
     }
-
-    // document.querySelector('div').innerHTML = result
 }
 
-fetchData();
+const randWords = ["cap", "rizz", "trash", "free+range+kid"]
+let randNum = Math.floor((Math.random()*(randWords.length-1)));
+
+fetchData(randWords[randNum]);
