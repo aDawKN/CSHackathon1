@@ -1,4 +1,5 @@
 async function fetchData(){
+    const url = 'https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=wat';
     const options = {
         method: 'GET',
         headers: {
