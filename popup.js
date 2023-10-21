@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+	document.body.style.width="600px";
+	document.getElementsByTagName("html")[0].style.width="600px";
 	let wordODay = "cap";
 	const mainH2 = document.querySelector("h2");
 	mainH2.innerHTML = mainH2.innerHTML + wordODay;
@@ -6,7 +8,41 @@ document.addEventListener('DOMContentLoaded', () => {
 	defODay.then( resp =>{
 		addDef(resp);
 	})
+	//Creating a text box
+	const mainH3 = document.querySelector("h3")
+	const textInput = document.createElement('input');
+	mainH3.appendChild(textInput)
 
+	//Creating a Button
+	const button = document.createElement('button');
+	button.innerHTML = 'Submit'
+	mainH3.appendChild(button)
+
+	let messageInput
+
+	//Button Logic
+	button.addEventListener('click', () => {
+		messageInput = textInput.value
+		textInput.value = ''
+		//Clearing Urban Dictionary Word of the Day
+		const clearHead = document.querySelector("h2")
+		while (clearHead.hasChildNodes()){
+			clearHead.removeChild(clearHead.firstChild)
+		}
+		//Clearing Definition of Word of the Day
+		const clearDef = document.querySelector("#defHolder")
+		while (clearDef.hasChildNodes()){
+			clearDef.removeChild(clearDef.firstChild)
+		}
+		//Setting Header as User's Search Result
+		const userWord = document.querySelector("h2")
+		userWord.innerHTML = "Search Result: " + messageInput
+		messageInput = messageInput.replaceAll(" ","+")
+		const userDef = fetchData(messageInput)
+		userDef.then(resp1 => {
+			addSearchDef(resp1)
+		})
+	})
 
 });
 
@@ -45,6 +81,15 @@ function addDef(arr){
 		let defItem = document.createElement('li');
 		defItem.innerHTML = removeBracket(defObj.definition);
 		defHolder.appendChild(defItem);
+	});
+}
+
+function addSearchDef(arr){
+	const userdefHolder = document.querySelector("#defHolder");
+	arr.forEach((defObj) => {
+		let defItem1 = document.createElement('li');
+		defItem1.innerHTML = removeBracket(defObj.definition);
+		userdefHolder.appendChild(defItem1);
 	});
 }
 
